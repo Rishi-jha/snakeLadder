@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>form</title>
+</head>
+<script type="text/javascript">
+
+function add_add () {
+
+	if (document.getElementById("add_choice").checked){
+		document.getElementById("permanent").value = document.getElementById("present_add").value;
+		document.getElementById("permanent").disabled = true;
+	}
+};
+
+
+</script>
+<body>
+<form id="testform">
+
+	Present Address:<br>
+  <input id="present_add" type="text" name="present_add">
+  <br>
+	Same as Above:
+	<input id="add_choice" type="checkbox" name="add_choice" value="True", onchange="add_add()">
+	<br>
+   Permanent Address:<br>
+	<input id="permanent" type="text" name="permanent_add">
+  <br><br>
+
+
+</form>
+</body>
+</html>
