@@ -24,6 +24,7 @@ import random
 import string
 import sys
 from collections import OrderedDict
+from .style import EACH_MOVE_PROMPT
 
 PLAYER_TURN_END = 0
 PLAYER_WON = 1
@@ -50,18 +51,25 @@ class Player(object):
     Player class to create players
     '''
 
-    def __init__(self, name=None, color=None, game_mode=1):
+    def __init__(self, name=None, color=None, game_mode=1, is_cpu=False):
         '''
         :param: TODO
         '''
         self.name = name or "User_{0}".format(''.join(random.choices(string.ascii_uppercase + string.digits, k=6)))
         self.color = COLORS.pop(COLORS.index(random.choice(COLORS))) if COLORS else "COLOR_{0}".format(''.join(random.choices(string.ascii_uppercase , k=6)))
         self.symbol = None
+        self.last_position = 0
         self.current_position = 0
         self.current_die_value = None
         self.game_mode = game_mode
+        print(self.game_mode)
         self.move_count = 0
         self.rank = None
+        self.is_cpu = is_cpu
+        if self.is_cpu:
+            self.name = "Computer"
+        self.EACH_MOVE_PROMPT = EACH_MOVE_PROMPT
+        self.each_move_prompt_set = False
 
     def move(self):
         self.roll_dice()
@@ -79,15 +87,28 @@ class Player(object):
     def roll_dice(self):
         self.current_die_value = [random.choice(DICE) for i in range(self.game_mode)]
 
-    def mark_symbol(self, symbol):
-      self.symbol = symbol
-
     @property
     def is_winner(self):
         return self.current_position == 100
 
     def move_to_next_position(self):
+        self.last_position = self.current_position
+
         if self.current_position + sum(self.current_die_value) <= 99:
             self.current_position = board[self.current_position + sum(self.current_die_value)]
         else:
             self.current_position = board[2*100 - self.current_position - sum(self.current_die_value)]
+        print(self.last_position, self.current_position)
+        input("prompt")
+
+    def set_next_move_question(self):
+        self.EACH_MOVE_PROMPT[0]["choices"][0].format(player_name=self.name)
+        self.each_move_prompt_set = True
+
+    def get_next_move_question(self):
+        if not self.each_move_prompt_set:
+            self.set_next_move_question()
+        return self.EACH_MOVE_PROMPT
+
+
+

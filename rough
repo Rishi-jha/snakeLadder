@@ -1,0 +1,53 @@
+Main Game Start
+Show the introduction
+Show Options
+Option 1: Play a Game
+	Sub Option 1: Single Dice
+	Sub Option 2: Double Dice
+
+Option 2: Game Rules
+Option 3: Show Licence
+Option 4: Bugs/Suggestions
+Option 5: Exit
+
+Game Rules: Open Rules File
+Show Licence: Open Licence File
+Bugs/Suggestions: Show bugs_suggestions file
+
+
+Game Play: 
+Select Game Mode:
+Option 1: Single Player
+Option 2: Multiplayer
+Option 3: Back to Main Menu
+Option 4: Exit
+
+Single Player Game Play:
+Choose 1 Player:
+Select Player Name
+Another Player would be program itself.
+
+Multiplayer:
+Chose No Of Players: 1<P<=4
+Select Player Names
+
+Each Game Play Type:
+Display Board:
+
+Each Player Activity:
+Roll Dice:
+	Make Move
+	Make Board Animation
+	For Double Dice Mode:
+		If Same value on each dice, repeat
+	For Single Dice Mode:
+		If value is 6, repeat
+For Single Player Mode:
+	First to Reach 100 win
+For Multiplayer:
+	First 3 to reach 100 will rank accordingly.
+
+After Game End: 
+	Show Statistics
+
+Repeat from main menu
