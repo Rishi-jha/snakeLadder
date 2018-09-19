@@ -25,6 +25,8 @@ import string
 import sys
 from collections import OrderedDict
 from .style import EACH_MOVE_PROMPT
+import os
+import time
 
 PLAYER_TURN_END = 0
 PLAYER_WON = 1
@@ -70,11 +72,13 @@ class Player(object):
             self.name = "Computer"
         self.EACH_MOVE_PROMPT = EACH_MOVE_PROMPT
         self.each_move_prompt_set = False
+        self.current_board = None
 
     def move(self):
         self.roll_dice()
         print("Your Dice: {}".format(self.current_die_value))
         self.move_to_next_position()
+        self.move_board()
         self.move_count += 1
         if self.is_winner:
             return PLAYER_WON
@@ -98,8 +102,6 @@ class Player(object):
             self.current_position = board[self.current_position + sum(self.current_die_value)]
         else:
             self.current_position = board[2*100 - self.current_position - sum(self.current_die_value)]
-        print(self.last_position, self.current_position)
-        input("prompt")
 
     def set_next_move_question(self):
         self.EACH_MOVE_PROMPT[0]["choices"][0].format(player_name=self.name)
@@ -110,5 +112,25 @@ class Player(object):
             self.set_next_move_question()
         return self.EACH_MOVE_PROMPT
 
+    def set_board(self, board):
+        self.current_board = board
 
+    def set_symbol(self, symbol):
+        self.symbol = symbol
+
+    def set_index(self, index):
+        self.index = index
+
+    def get_board_position(self):
+        return self.current_board
+
+    def move_board(self):
+        for pos in range(self.last_position+1, self.current_position+2):
+            os.system("clear")
+            dummy_board = self.current_board.copy()
+            dummy_board[self.index[self.last_position+1]] = " "
+            dummy_board[self.index[pos]] = self.symbol
+            print("".join(dummy_board))
+            time.sleep(0.5)
+        self.current_board = dummy_board
 

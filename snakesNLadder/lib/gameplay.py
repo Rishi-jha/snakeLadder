@@ -46,8 +46,9 @@ class BaseGamePlay(object):
         while len(players) > 1:
             for player in players:
                 self.each_move_prompt(player)
+                player.set_board(self.board.board_position)
                 rc = player.move()
-                self.board_move(player)
+                self.board.board_position = player.get_board_position()
                 if rc == PLAYER_WON:
                     print("Player {} won!!!!\nCongrats.".format(player.name))
                     print("Rank: {}".format(_achieved_rank+1))

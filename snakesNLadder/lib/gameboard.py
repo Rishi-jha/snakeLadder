@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+from turtledemo.minimal_hanoi import play
 
 
 board_position = list(u"""   __________________________________________________________________________________________
@@ -59,9 +60,6 @@ game_map = {
 "^": [4504, 4513, 4522, 4531, 4540, 4549, 4558, 4567, 4576, 4585, 4594, 4603, 4133, 4124, 4115, 4106, 4097, 4088, 4079, 4070, 4061, 4052, 3582, 3591, 3600, 3609, 3618, 3627, 3636, 3645, 3654, 3663, 3193, 3184, 3175, 3166, 3157, 3148, 3139, 3130, 3121, 3112, 2642, 2651, 2660, 2669, 2678, 2687, 2696, 2705, 2714, 2723, 2253, 2244, 2235, 2226, 2217, 2208, 2199, 2190, 2181, 2172, 1702, 1711, 1720, 1729, 1738, 1747, 1756, 1765, 1774, 1783, 1313, 1304, 1295, 1286, 1277, 1268, 1259, 1250, 1241, 1232, 762, 771, 780, 789, 798, 807, 816, 825, 834, 843, 373, 364, 355, 346, 337, 328, 319, 310, 301, 292],
 "&": [4598, 4607, 4616, 4625, 4634, 4643, 4652, 4661, 4670, 4679, 4688, 4697, 4227, 4218, 4209, 4200, 4191, 4182, 4173, 4164, 4155, 4146, 3676, 3685, 3694, 3703, 3712, 3721, 3730, 3739, 3748, 3757, 3287, 3278, 3269, 3260, 3251, 3242, 3233, 3224, 3215, 3206, 2736, 2745, 2754, 2763, 2772, 2781, 2790, 2799, 2808, 2817, 2347, 2338, 2329, 2320, 2311, 2302, 2293, 2284, 2275, 2266, 1796, 1805, 1814, 1823, 1832, 1841, 1850, 1859, 1868, 1877, 1407, 1398, 1389, 1380, 1371, 1362, 1353, 1344, 1335, 1326, 856, 865, 874, 883, 892, 901, 910, 919, 928, 937, 467, 458, 449, 440, 431, 422, 413, 404, 395, 386]}
 
-import os
-import time
-
 
 class GameBoard(object):
 
@@ -72,27 +70,24 @@ class GameBoard(object):
 
     def load_board(self):
         for player in self.players:
-            self.board_position[self.players_symbol[player]["index"][1]] = self.players_symbol[player]["symbol"]
+            self.board_position[player.index[1]] = player.symbol
         print("".join(self.board_position))
 
     def set_players_symbols(self):
         for player,symbol in zip(self.players, game_map.keys()):
-            self.players_symbol[player] = {}
-            self.players_symbol[player]["symbol"] = symbol
-            self.players_symbol[player]["index"] = game_map[symbol]
+            player.set_symbol(symbol)
+            player.set_index(game_map[symbol])
 
     def move(self, player):
-        last_pos = player.last_position
-        new_pos = player.current_position
-        for pos in range(last_pos+1, new_pos+2):
-            os.system("clear")
-            dummy_board = self.board_position.copy()
-            dummy_board[self.players_symbol[player]["index"][last_pos+1]] = " "
-            dummy_board[self.players_symbol[player]["index"][pos]] = self.players_symbol[player]["symbol"]
-            print("".join(dummy_board))
-            time.sleep(0.5)
-        self.board_position = dummy_board
+        input("b")
+        print(self.board_position)
+        input("b")
+        player.set_board(self.board_position)
+        input("b")
+        print(self.board_position)
 
+        player.move()
+        self.board_position = player.get_board_position()
 
 def load_board(players):
     gameboard = GameBoard(players)
